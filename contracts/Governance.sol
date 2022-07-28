@@ -15,8 +15,20 @@ contract Governance is
     GovernorVotesQuorumFraction,
     GovernorTimelockControl
 {
+
+    struct Proposal {
+        uint256 iterator;
+        string description;
+        uint256 proposalId;
+        uint256 startBlock;
+        uint256 endBlock;
+    }
+
+    mapping(uint => Proposal) public proposals;
+
     uint256 public votingDelay_;
     uint256 public votingPeriod_;
+    uint256 public proposalIterator = 1;
 
     constructor(
         ERC20Votes _token,
@@ -77,7 +89,12 @@ contract Governance is
         bytes[] memory calldatas,
         string memory description
     ) public override(Governor, IGovernor) returns (uint256) {
-        return super.propose(targets, values, calldatas, description);
+        uint256 proposal = super.propose(targets, values, calldatas, description);
+        uint256 start = proposalSnapshot(proposal);
+        uint256 end = proposalDeadline(proposal);
+        proposals[proposalIterator] = Proposal(proposalIterator, description, proposal, start, end);
+        proposalIterator++;
+        return proposal;
     }
 
     function _execute(
