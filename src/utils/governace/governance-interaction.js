@@ -147,7 +147,7 @@ export const fetchProposalLength = async () => {
 }
 
 let startResult = 0;
-let proposalDataArray=[];
+let proposalData=[];
 export const fetchProposalData = async () => {
     fetchProposalLength().then(async (result) => {
         if(result > startResult) {
@@ -160,10 +160,10 @@ export const fetchProposalData = async () => {
                     start: String(data[3]),
                     end: String(data[4])
                 }
-                proposalDataArray.push(parseData);
+                proposalData.push(parseData);
             }
             startResult = result;
         }
     })
-    return proposalDataArray;
+    return proposalData;
 }

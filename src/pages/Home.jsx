@@ -6,14 +6,28 @@ import { Sidebar } from "../components/Sidebar";
 import Heading from "../components/Heading.jsx";
 import { fetchProposalData } from "../utils/governace/governance-interaction.js";
 import CardList from "../components/CardList.jsx";
+import Card from "../components/Card.jsx";
 
 const Home = () => {
   const [proposalDataArray, setProposalDataArray] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchProposalData().then((result) => {
+  let getData = async () => {
+    await fetchProposalData().then((result) => {
       setProposalDataArray(result);
     });
+    setLoading(false);
+  };
+
+  useEffect( () => {
+    getData();
+
+    // const interval = setInterval(() => {
+    //   setLoading(true);
+    //   getData();
+    // }, 1000);
+
+    // return () => clearInterval(interval);
   });
 
   console.log(proposalDataArray);
@@ -27,7 +41,10 @@ const Home = () => {
         </div>
         <div className="flex flex-col">
           <Heading />
-          <CardList proposalDataArray={proposalDataArray} />
+          {
+            
+            loading ? null : <Card proposalDataArray={proposalDataArray} />
+          }
         </div>
       </div>
     </div>
