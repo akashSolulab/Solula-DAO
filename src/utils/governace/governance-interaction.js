@@ -3,7 +3,7 @@ import Token from "../../contracts/Token.json"
 import Governance from "../../contracts/Governance.json";
 import TimeLock from "../../contracts/TimeLock.json";
 import Treasury from "../../contracts/Treasury.json";
-import moment from "moment";
+import moment, { locale } from "moment";
 
 // provider
 const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -85,7 +85,7 @@ const iface = new ethers.utils.Interface(Treasury.abi);
 // console.log(iface);
 const encodedFunction = iface.encodeFunctionData("releaseFunds");
 // console.log("encoded function", encodedFunction);
-const description = "Release Fund From Treasurya";
+const description = "Release Fund From Treasuryc";
 export const createProposal = async () => {
     console.log(signerObj);
     console.log(signer);
@@ -142,21 +142,28 @@ export const executeGovernance = async () => {
     await governanceContractInstance.connect(signerObj).execute([treasuryContract], [0], [encodedFunction], hash);
 }
 
-export const fetchProposalData = async () => {
-    console.log(governanceContractInstance.functions);
-    let data = await governanceContractInstance.connect(provider).proposals(1);
-    console.log(data);
-    let parseData = {
-        id: String(data[0]),
-        description: (data[1]),
-        pId: String(data[2]),
-        start: String(data[3]),
-        end: String(data[4])
-    }
-    console.log(parseData);
-}
-
 export const fetchProposalLength = async () => {
-    console.log(String(await governanceContractInstance.connect(provider).proposalIterator()));
+    return String(await governanceContractInstance.connect(provider).proposalIterator());
 }
 
+let startResult = 0;
+let proposalDataArray=[];
+export const fetchProposalData = async () => {
+    fetchProposalLength().then(async (result) => {
+        if(result > startResult) {
+            for(let i=1; i<=result; i++) {
+                let data = await governanceContractInstance.connect(provider).proposals(i);
+                let parseData = {
+                    id: String(data[0]),
+                    description: (data[1]),
+                    pId: String(data[2]),
+                    start: String(data[3]),
+                    end: String(data[4])
+                }
+                proposalDataArray.push(parseData);
+            }
+            startResult = result;
+        }
+    })
+    return proposalDataArray;
+}

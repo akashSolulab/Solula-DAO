@@ -28,7 +28,7 @@ contract Governance is
 
     uint256 public votingDelay_;
     uint256 public votingPeriod_;
-    uint256 public proposalIterator = 1;
+    uint256 public proposalIterator;
 
     constructor(
         ERC20Votes _token,
@@ -92,8 +92,8 @@ contract Governance is
         uint256 proposal = super.propose(targets, values, calldatas, description);
         uint256 start = proposalSnapshot(proposal);
         uint256 end = proposalDeadline(proposal);
-        proposals[proposalIterator] = Proposal(proposalIterator, description, proposal, start, end);
         proposalIterator++;
+        proposals[proposalIterator] = Proposal(proposalIterator, description, proposal, start, end);
         return proposal;
     }
 
