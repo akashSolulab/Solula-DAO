@@ -34,6 +34,39 @@ module.exports = {
     },
     localhost: {
       url: "http://127.0.0.1:8545"
-    }
+    },
+    ropsten: {
+      url: process.env.REACT_APP_ALCHEMY_RPC_URL || "",
+      accounts:
+        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY, process.env.PRIVATE_KEY_USER_1] : [],
+      gas: "auto"
+    },
+    rinkeby: {
+      url: process.env.REACT_APP_ALCHEMY_RPC_URL || "",
+      accounts:
+        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY, process.env.PRIVATE_KEY_USER_1] : [],
+      gas: "auto"
+    },
+    goerli: {
+      url: process.env.REACT_APP_ALCHEMY_RPC_URL || "",
+      accounts:
+        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY, process.env.PRIVATE_KEY_USER_1] : [],
+      gas: "auto"
+    },
+    bscTestnet: {
+      url: process.env.REACT_APP_ALCHEMY_RPC_URL || "",
+      accounts:
+        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY, process.env.PRIVATE_KEY_USER_1] : [],
+      gas: "auto"
+    },
+    polygonTestnet: {
+      url: process.env.REACT_APP_ALCHEMY_RPC_URL || "",
+      accounts:
+        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY, process.env.PRIVATE_KEY_USER_1] : [],
+      gas: "auto"
+    },
+    localhost: {
+      url: "http://127.0.0.1:8545",
+    },
   }
 };

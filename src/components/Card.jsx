@@ -1,11 +1,8 @@
 import React from "react";
 
 const Card = (props) => {
-  const {proposalDataArray} = props;
-  console.log("data from card", proposalDataArray);
+  const {data, index} = props;
   return (
-    proposalDataArray.map((data, index) =>{
-      return (
         <div key={index}>
       <a
         href="#"
@@ -40,10 +37,7 @@ const Card = (props) => {
         </p>
         <p className="font-normal text-gray-400">7 days left</p>
       </a>
-    </div>
-      )
-    })
-    
+    </div>    
   );
 };
 

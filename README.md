@@ -1,70 +1,81 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Solulab DAO(Decentralised Automnomous Organisation)
+Solulab DAO is an ERC20 based governance mechanism.
 
-## Available Scripts
+DAOs are an effective and safe way to work with like-minded folks around the globe.
 
-In the project directory, you can run:
+Think of them like an internet-native business that's collectively owned and managed by its members. They have built-in treasuries that no one has the authority to access without the approval of the group. Decisions are governed by proposals and voting to ensure everyone in the organization has a voice. [Read More About DAOs](https://ethereum.org/en/dao/)
 
-### `npm start`
+***
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Clone repository
+```bash
+git clone https://github.com/akashSolulab/Solulab-DAO.git
+```
+***
+### Installation
+```bash
+cd Solulab-DAO
+npm install
+```
+***
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Smart contract structure
+This repository uses openzeppelin's modular system of governance
 
-### `npm test`
+[Governance](https://github.com/akashSolulab/Solulab-DAO/blob/main/contracts/Governance.sol): The core contract that contains all the logic and primitives
+[Timelock](https://github.com/akashSolulab/Solulab-DAO/blob/main/contracts/Timelock.sol): Allows multiple proposers and executors, in addition to the Governor itself.
+[Governance Token](https://github.com/akashSolulab/Solulab-DAO/blob/main/contracts/Token.sol): Extension of ERC20 to support Compound-like voting and delegation
+[Treasury](https://github.com/akashSolulab/Solulab-DAO/blob/main/contracts/Treasury.sol): Contract holding the funds inside it
+***
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Smart contract Interaction
+#### Compile smart contracts
+```bash
+npx hardhat compile
+```
+#### Test smart contracts
+```bash
+npx hardhat test
+```
+#### Smart contract Deployment
+Create a .env file in the root directory and add the following variables
+>`REACT_APP_ALCHEMY_RPC_URL = ""`
+>`REACT_APP_DEPLOYER_PRIV_KEY = ""`
+>`REACT_APP_TOKEN_CONTRACT = ""`
+>`REACT_APP_TIMELOCK_CONTRACT = ""`
+>`REACT_APP_GOVERNANCE_CONTRACT = ""`
+>`REACT_APP_TREASURY_CONTRACT = ""`
+>`REACT_APP_PARTICIPANT_1 = ""`
+>`REACT_APP_PARTICIPANT_2 = ""`
+>`REACT_APP_PARTICIPANT_3 = ""`
+>`REACT_APP_PARTICIPANT_4 = ""`
+>`REACT_APP_PARTICIPANT_5 = ""`
 
-### `npm run build`
+Supported networks for deployment
+-   `localhost`
+-   `ropsten`
+-   `rinkeby`
+-   `goerli`
+-   `polygon (mumbai testnet)`
+-   `bsc testnet`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+##### Deploying GTP Token Smart Contract
+```bash
+npx hardhat run --network localhost scripts/deploy-governance.js
+```
+#### Smart contract verification
+Add the following to your .env file
+> `ETHERSCAN_API_KEY = ""`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```bash
+npx hardhat verify --network polygon DEPLOYED_CONTRACT_ADDRESS "Constructor argument 1"
+```
+***
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Frontend Interaction
+```bash
+npm start
+```
+#### Wallet support 
+Used rainbowkit for the wallet Interaction. [rainbowkit docs](https://www.rainbowkit.com/docs/introduction)

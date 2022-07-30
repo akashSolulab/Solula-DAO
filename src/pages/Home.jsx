@@ -6,7 +6,6 @@ import { Sidebar } from "../components/Sidebar";
 import Heading from "../components/Heading.jsx";
 import { fetchProposalData } from "../utils/governace/governance-interaction.js";
 import CardList from "../components/CardList.jsx";
-import Card from "../components/Card.jsx";
 
 const Home = () => {
   const [proposalDataArray, setProposalDataArray] = useState([]);
@@ -43,7 +42,7 @@ const Home = () => {
           <Heading />
           {
             
-            loading ? null : <Card proposalDataArray={proposalDataArray} />
+            loading ? null : <CardList proposalDataArray={proposalDataArray} />
           }
         </div>
       </div>
