@@ -23,10 +23,10 @@ npm install
 ### Smart contract structure
 This repository uses openzeppelin's modular system of governance
 
-[Governance](https://github.com/akashSolulab/Solulab-DAO/blob/main/contracts/Governance.sol): The core contract that contains all the logic and primitives
-[Timelock](https://github.com/akashSolulab/Solulab-DAO/blob/main/contracts/Timelock.sol): Allows multiple proposers and executors, in addition to the Governor itself.
-[Governance Token](https://github.com/akashSolulab/Solulab-DAO/blob/main/contracts/Token.sol): Extension of ERC20 to support Compound-like voting and delegation
-[Treasury](https://github.com/akashSolulab/Solulab-DAO/blob/main/contracts/Treasury.sol): Contract holding the funds inside it
+- [Governance](https://github.com/akashSolulab/Solulab-DAO/blob/main/contracts/Governance.sol): The core contract that contains all the logic and primitives
+- [Timelock](https://github.com/akashSolulab/Solulab-DAO/blob/main/contracts/Timelock.sol): Allows multiple proposers and executors, in addition to the Governor itself.
+- [Governance Token](https://github.com/akashSolulab/Solulab-DAO/blob/main/contracts/Token.sol): Extension of ERC20 to support Compound-like voting and delegation
+- [Treasury](https://github.com/akashSolulab/Solulab-DAO/blob/main/contracts/Treasury.sol): Contract holding the funds inside it
 ***
 
 ### Smart contract Interaction
@@ -40,17 +40,17 @@ npx hardhat test
 ```
 #### Smart contract Deployment
 Create a .env file in the root directory and add the following variables
-`REACT_APP_ALCHEMY_RPC_URL = ""`
-`REACT_APP_DEPLOYER_PRIV_KEY = ""`
-`REACT_APP_TOKEN_CONTRACT = ""`
-`REACT_APP_TIMELOCK_CONTRACT = ""`
-`REACT_APP_GOVERNANCE_CONTRACT = ""`
-`REACT_APP_TREASURY_CONTRACT = ""`
-`REACT_APP_PARTICIPANT_1 = ""`
-`REACT_APP_PARTICIPANT_2 = ""`
-`REACT_APP_PARTICIPANT_3 = ""`
-`REACT_APP_PARTICIPANT_4 = ""`
-`REACT_APP_PARTICIPANT_5 = ""`
+- `REACT_APP_ALCHEMY_RPC_URL = ""`
+- `REACT_APP_DEPLOYER_PRIV_KEY = ""`
+- `REACT_APP_TOKEN_CONTRACT = ""`
+- `REACT_APP_TIMELOCK_CONTRACT = ""`
+- `REACT_APP_GOVERNANCE_CONTRACT = ""`
+- `REACT_APP_TREASURY_CONTRACT = ""`
+- `REACT_APP_PARTICIPANT_1 = ""`
+- `REACT_APP_PARTICIPANT_2 = ""`
+- `REACT_APP_PARTICIPANT_3 = ""`
+- `REACT_APP_PARTICIPANT_4 = ""`
+- `REACT_APP_PARTICIPANT_5 = ""`
 
 Supported networks for deployment
 -   `localhost`
