@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
 contract Token is ERC20Votes {
+    
     constructor(
         string memory _name,
         string memory _symbol,
@@ -13,7 +14,6 @@ contract Token is ERC20Votes {
     }
 
     // The functions below are overrides required by Solidity.
-
     function _afterTokenTransfer(
         address from,
         address to,
