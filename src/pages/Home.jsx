@@ -10,24 +10,22 @@ import CardList from "../components/CardList.jsx";
 const Home = () => {
   const [proposalDataArray, setProposalDataArray] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isRendering, setRendering] = useState(false);
 
-  let getData = async () => {
-    await fetchProposalData().then((result) => {
+  let getData = () => {
+    fetchProposalData().then((result) => {
       setProposalDataArray(result);
     });
     setLoading(false);
   };
 
+  useEffect(() => {
+    setRendering(true)
+  })
+
   useEffect( () => {
-    getData();
-
-    // const interval = setInterval(() => {
-    //   setLoading(true);
-    //   getData();
-    // }, 1000);
-
-    // return () => clearInterval(interval);
-  });
+    isRendering && getData();
+  }, [isRendering]);
 
   console.log(proposalDataArray);
 
@@ -42,7 +40,7 @@ const Home = () => {
           <Heading />
           {
             
-            loading ? null : <CardList proposalDataArray={proposalDataArray} />
+            loading && proposalDataArray ? null : <CardList proposalDataArray={proposalDataArray} />
           }
         </div>
       </div>
