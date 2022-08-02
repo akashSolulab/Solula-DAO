@@ -1,3 +1,4 @@
+require("@nomiclabs/hardhat-etherscan");
 require("@nomiclabs/hardhat-waffle");
 require('dotenv').config();
 
@@ -38,35 +39,43 @@ module.exports = {
     ropsten: {
       url: process.env.REACT_APP_ALCHEMY_RPC_URL || "",
       accounts:
-        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY, process.env.PRIVATE_KEY_USER_1] : [],
+        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY] : [],
       gas: "auto"
     },
     rinkeby: {
       url: process.env.REACT_APP_ALCHEMY_RPC_URL || "",
       accounts:
-        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY, process.env.PRIVATE_KEY_USER_1] : [],
+        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY] : [],
       gas: "auto"
     },
     goerli: {
       url: process.env.REACT_APP_ALCHEMY_RPC_URL || "",
       accounts:
-        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY, process.env.PRIVATE_KEY_USER_1] : [],
+        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY] : [],
       gas: "auto"
     },
     bscTestnet: {
       url: process.env.REACT_APP_ALCHEMY_RPC_URL || "",
       accounts:
-        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY, process.env.PRIVATE_KEY_USER_1] : [],
+        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY] : [],
       gas: "auto"
     },
     polygonTestnet: {
       url: process.env.REACT_APP_ALCHEMY_RPC_URL || "",
       accounts:
-        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY, process.env.PRIVATE_KEY_USER_1] : [],
+        process.env.REACT_APP_DEPLOYER_PRIV_KEY !== undefined ? [process.env.REACT_APP_DEPLOYER_PRIV_KEY] : [],
       gas: "auto"
     },
     localhost: {
       url: "http://127.0.0.1:8545",
     },
+  },
+  etherscan: {
+    apiKey: {
+      goerli: process.env.REACT_APP_ETHERSCAN_API_KEY,
+    },
+  },
+  mocha: {
+    timeout: 80000
   }
 };

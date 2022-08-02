@@ -32,46 +32,17 @@ const Card = (props) => {
     let endBlock = data.end;
     let startBlock = data.start;
     let blockDifference = endBlock - startBlock;
-    let timeRate = blockDifference * 15
-    let timeOutput = (timeRate/60)
-    let momentMin = moment().minute(timeOutput)
+    let timeRate = blockDifference * 15;
+    let timeOutput = timeRate / 60;
+    let momentMin = moment.duration(timeOutput, "minutes").humanize();
     return String(momentMin);
-  }
+  };
 
   if (modal) {
     document.body.classList.add("active-modal");
   } else {
     document.body.classList.remove("active-modal");
   }
-
-  useEffect(() => {
-    getProposalState(data.pId).then((result) => {
-      setProposalState(result);
-      setproposalStateString(proposalStateOutput());
-    });
-
-    getQuorum().then((result) => {
-      setQuorumState(result);
-    });
-
-    getVoteStatics(data.pId).then((result) => {
-      setVotesFor(result.voteFor);
-      setVotesAgainst(result.voteAgainst);
-      setVotesAbstain(result.voteAbstain);
-    });
-
-    setTimeLeft(fetchTimeLeft())
-
-  }, [proposalState, timeLeft]);
-
-  useEffect(() => {
-    provider.send("eth_requestAccounts", []).then(async () => {
-      let signerObj = provider.getSigner();
-      setSigner(await signerObj.getAddress());
-    })
-  })
-
-  console.log(timeLeft);
 
   let proposalStateOutput = () => {
     // States:
@@ -106,6 +77,42 @@ const Card = (props) => {
       return "Yet to be triggered";
     }
   };
+
+  useEffect(() => {
+    getProposalState(data.pId).then((result) => {
+      setProposalState(result);
+      setproposalStateString(proposalStateOutput());
+    });
+
+    getQuorum().then((result) => {
+      setQuorumState(result);
+    });
+
+    getVoteStatics(data.pId).then((result) => {
+      setVotesFor(result.voteFor);
+      setVotesAgainst(result.voteAgainst);
+      setVotesAbstain(result.voteAbstain);
+    });
+
+    setTimeLeft(fetchTimeLeft());
+  }, [
+    proposalState,
+    proposalStateString,
+    timeLeft,
+    votesFor,
+    votesAgainst,
+    votesAbstain,
+  ]);
+
+  useEffect(() => {
+    provider.send("eth_requestAccounts", []).then(async () => {
+      let signerObj = provider.getSigner();
+      setSigner(await signerObj.getAddress());
+    });
+  });
+
+  console.log(timeLeft);
+
   return (
     <div
       key={index}
@@ -114,20 +121,18 @@ const Card = (props) => {
       }}
     >
       {modal && (
-        <div className="modal">
+        <div className="modal justify-start ">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
             <h2>
               <b> {data.description} </b>
             </h2>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
-              perferendis suscipit officia recusandae, eveniet quaerat assumenda
-              id fugit, dignissimos maxime non natus placeat illo iusto!
-              Sapiente dolorum id maiores dolores? Illum pariatur possimus
-              quaerat ipsum quos molestiae rem aspernatur dicta tenetur. Sunt
-              placeat tempora vitae enim incidunt porro fuga ea.
+              Static Data Below. This can be replaced with a useful data <br />
+              DAOs are an effective and safe way to work with like-minded folks
+              around the globe.
             </p>
+            <br />
             <hr />
             <p> Quorum: {quorumState} </p>
             <hr />
@@ -138,9 +143,9 @@ const Card = (props) => {
             </p>
             <hr />
             <p>
-              Place your vote here
+              Place your vote here:
               <button
-                className="vote-for"
+                className="rounded-full"
                 onClick={async () => {
                   await delegateGovernanceToken(
                     process.env.REACT_APP_ADMIN_ADDRESS
@@ -152,6 +157,7 @@ const Card = (props) => {
               </button>{" "}
               ||
               <button
+                className="rounded-full"
                 onClick={async () => {
                   await delegateGovernanceToken(
                     process.env.REACT_APP_ADMIN_ADDRESS
@@ -163,6 +169,7 @@ const Card = (props) => {
               </button>{" "}
               ||
               <button
+                className="rounded-full"
                 onClick={async () => {
                   await delegateGovernanceToken(
                     process.env.REACT_APP_ADMIN_ADDRESS
@@ -174,7 +181,7 @@ const Card = (props) => {
               </button>{" "}
             </p>
             <button className="close-modal" onClick={toggleModal}>
-              CLOSE
+              <b>X</b>
             </button>
           </div>
         </div>
@@ -191,7 +198,7 @@ const Card = (props) => {
               className=" h-6 w-6 rounded-full"
               alt=""
             />
-            <p className=" font-medium text-gray-400 ml-2">Add title here</p>
+            <p className=" font-medium text-gray-400 ml-2">Solulab DAO</p>
             <button className=" hover:bg-blue-700 text-gray-400 font-bold  px-1 rounded-full">
               Core
             </button>
@@ -205,9 +212,14 @@ const Card = (props) => {
           {data.description}
         </h5>
         <p className="font-normal text-gray-400">
-          Add content here
+          They have built-in treasuries that no one has the authority to access
+          without the approval of the group. Decisions are governed by proposals
+          and voting to ensure everyone in the organization has a voice.
         </p>
-        <p className="font-normal text-gray-400"> <b> End Time: {timeLeft} </b> </p>
+        <p className="font-normal text-gray-400">
+          {" "}
+          <b> Ends In: {timeLeft} </b>{" "}
+        </p>
       </a>
     </div>
   );

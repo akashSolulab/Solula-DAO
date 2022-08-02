@@ -8,6 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import { RainbowKitProvider, darkTheme } from "@rainbow-me/rainbowkit";
 import { WagmiConfig } from "wagmi";
 import { wagmiClient, chains } from "./utils/wallet-connector/walletConnector";
+import { TreasuryProvider } from "./context/treasury.context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -15,7 +16,9 @@ root.render(
     <BrowserRouter>
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider chains={chains} theme={darkTheme()}>
-          <App />
+          <TreasuryProvider>
+            <App />
+          </TreasuryProvider>
         </RainbowKitProvider>
       </WagmiConfig>
     </BrowserRouter>
