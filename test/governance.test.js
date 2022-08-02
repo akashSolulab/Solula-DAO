@@ -15,115 +15,115 @@ describe("Testing Governance Flow", async () => {
 
   const treasuryABI = [
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "_payee",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "_payee",
+          type: "address",
+        },
       ],
-      "stateMutability": "payable",
-      "type": "constructor"
+      stateMutability: "payable",
+      type: "constructor",
     },
     {
-      "anonymous": false,
-      "inputs": [
+      anonymous: false,
+      inputs: [
         {
-          "indexed": true,
-          "internalType": "address",
-          "name": "previousOwner",
-          "type": "address"
+          indexed: true,
+          internalType: "address",
+          name: "previousOwner",
+          type: "address",
         },
         {
-          "indexed": true,
-          "internalType": "address",
-          "name": "newOwner",
-          "type": "address"
-        }
+          indexed: true,
+          internalType: "address",
+          name: "newOwner",
+          type: "address",
+        },
       ],
-      "name": "OwnershipTransferred",
-      "type": "event"
+      name: "OwnershipTransferred",
+      type: "event",
     },
     {
-      "inputs": [],
-      "name": "isReleased",
-      "outputs": [
+      inputs: [],
+      name: "isReleased",
+      outputs: [
         {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
+          internalType: "bool",
+          name: "",
+          type: "bool",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "owner",
-      "outputs": [
+      inputs: [],
+      name: "owner",
+      outputs: [
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "payee",
-      "outputs": [
+      inputs: [],
+      name: "payee",
+      outputs: [
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "",
+          type: "address",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "releaseFunds",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      inputs: [],
+      name: "releaseFunds",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "renounceOwnership",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
+      inputs: [],
+      name: "renounceOwnership",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
     },
     {
-      "inputs": [],
-      "name": "totalFunds",
-      "outputs": [
+      inputs: [],
+      name: "totalFunds",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "address",
-          "name": "newOwner",
-          "type": "address"
-        }
+          internalType: "address",
+          name: "newOwner",
+          type: "address",
+        },
       ],
-      "name": "transferOwnership",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    }
-  ]
+      name: "transferOwnership",
+      outputs: [],
+      stateMutability: "nonpayable",
+      type: "function",
+    },
+  ];
 
   function waitForTx(ms) {
     return new Promise((res) => {
@@ -132,14 +132,15 @@ describe("Testing Governance Flow", async () => {
   }
 
   before(async () => {
-    [owner, address1, address2, address3] = await ethers.getSigners();
+    [owner, address1, address2, address3, address4, address5] =
+      await ethers.getSigners();
 
     provider = new ethers.providers.JsonRpcProvider("http://127.0.0.1:8545");
 
     // deploying token contract
     const tokenName = "Governance Token";
     const tokenSymbol = "GVNT";
-    const initialSupply = ethers.utils.parseEther("100000");
+    const initialSupply = ethers.utils.parseEther("1000");
 
     TokenContract = await ethers.getContractFactory("Token");
     tokenContract = await TokenContract.deploy(
@@ -153,7 +154,8 @@ describe("Testing Governance Flow", async () => {
 
     // transfer some initial tokens to participants
     // this can be managed using a exchange to provide utility token
-    const amountToTransferInParticipantWallet = ethers.utils.parseEther("100");
+    const amountToTransferInParticipantWallet = ethers.utils.parseUnits("50");
+
     await tokenContract.transfer(
       address1.address,
       amountToTransferInParticipantWallet
@@ -166,9 +168,23 @@ describe("Testing Governance Flow", async () => {
       address3.address,
       amountToTransferInParticipantWallet
     );
+    await tokenContract.transfer(
+      address4.address,
+      amountToTransferInParticipantWallet
+    );
+    await tokenContract.transfer(
+      address5.address,
+      amountToTransferInParticipantWallet
+    );
+
+    await tokenContract.connect(address1).delegate(address1.address);
+    await tokenContract.connect(address2).delegate(address2.address);
+    await tokenContract.connect(address3).delegate(address3.address);
+    await tokenContract.connect(address4).delegate(address4.address);
+    await tokenContract.connect(address5).delegate(address5.address);
 
     // deploying timelock contract
-    const minDelay = 2; // How long do we have to wait until we can execute after a passed proposal (in block numbers)
+    const minDelay = 0; // How long do we have to wait until we can execute after a passed proposal (in block numbers)
     TimelockContract = await ethers.getContractFactory("TimeLock");
     timelockContract = await TimelockContract.deploy(
       minDelay,
@@ -180,7 +196,7 @@ describe("Testing Governance Flow", async () => {
     console.log("Timelock contract address", timelockContract.address);
 
     // deploy governance contract
-    const quorum = 3;
+    const quorum = 5;
     const votingDelay = 0;
     const votingPeriod = 5;
 
@@ -235,10 +251,12 @@ describe("Testing Governance Flow", async () => {
 
   describe("Governance Contract Interaction", () => {
     let proposalId;
+    let encodedFunction;
     before("Create Proposal", async () => {
       const iface = new ethers.utils.Interface(treasuryABI);
       // console.log(iface);
-      const encodedFunction = iface.encodeFunctionData("releaseFunds");
+      encodedFunction = iface.encodeFunctionData("releaseFunds");
+      console.log(encodedFunction);
 
       // description
       const description = "Release funds from treasury";
@@ -252,7 +270,7 @@ describe("Testing Governance Flow", async () => {
 
       let txReceipt = await tx.wait(1);
       let id = await txReceipt.events[0].args.proposalId;
-      proposalId = String(id)
+      proposalId = String(id);
     });
 
     it("Treasury should have funds", async () => {
@@ -268,7 +286,7 @@ describe("Testing Governance Flow", async () => {
     });
 
     it("should create proposal", async () => {
-      let data = await governanceContract.proposals(1)
+      let data = await governanceContract.proposals(1);
       let dataId = String(data.proposalId);
       expect(proposalId).to.equal(dataId);
     });
@@ -277,28 +295,90 @@ describe("Testing Governance Flow", async () => {
       let blockNumber = await provider.getBlockNumber();
       let quorum = await governanceContract.quorum(blockNumber - 1);
       let parseQuorum = ethers.utils.formatEther(String(quorum));
-      expect(parseQuorum).to.equal("3000.0");
-    })
+      expect(parseQuorum).to.equal("50.0");
+    });
 
     it("should caste vote", async () => {
+      let blockNumber = await provider.getBlockNumber();
+
+      let start = await governanceContract.proposalSnapshot(proposalId);
+      console.log("Proposal started at block:", String(start));
+
+      let end = await governanceContract.proposalDeadline(proposalId);
+      console.log("Proposal end at block:", String(end));
+
+      let voteRequired = await governanceContract.quorum(blockNumber - 1);
+      console.log("Votes required to win:", String(voteRequired));
+
+      console.log("casting votes...");
+
+      let amount = ethers.utils.parseEther("1.0");
+      let proposalState;
+
+      proposalState = await governanceContract.state(proposalId);
+      console.log("Proposal State:", proposalState, "(Pending)");
+
       await governanceContract.connect(address1).castVote(proposalId, 1);
       await governanceContract.connect(address2).castVote(proposalId, 1);
       await governanceContract.connect(address3).castVote(proposalId, 1);
+      await governanceContract.connect(address4).castVote(proposalId, 1);
+      await governanceContract.connect(address5).castVote(proposalId, 1);
 
-      let amount = ethers.utils.parseEther("1.0")
-      // just to skip 1 block
-      await tokenContract.transfer(address1.address, amount, { from: owner.address })
-      await tokenContract.transfer(address1.address, amount, { from: owner.address })
+      proposalState = await governanceContract.state(proposalId);
+      console.log("Proposal statw:", proposalState, "(Active)");
 
-      let proposalState = await governanceContract.state(proposalId);
-      console.log(proposalState);
+      // adding one block to the chain
+      await tokenContract.transfer(address1.address, amount, {
+        from: owner.address,
+      });
 
-      const { againstVotes, forVotes, abstainVotes } = await governanceContract.proposalVotes(proposalId)
-      console.log("For:", forVotes);
-      console.log("Against", againstVotes);
-      console.log("Abstain", abstainVotes);
+      const { againstVotes, forVotes, abstainVotes } =
+        await governanceContract.proposalVotes(proposalId);
+      console.log("Votes For:", String(forVotes));
+      console.log("Votes Against:", String(againstVotes));
+      console.log("Votes Abstain:", String(abstainVotes));
+
+      blockNumber = await provider.getBlockNumber();
+      console.log("Current blocknumber:", blockNumber);
+
+      proposalState = await governanceContract.state(proposalId);
+      console.log("Proposal State", proposalState, "(Success)");
+
+      expect(String(await governanceContract.state(proposalId))).to.equal(String(4));
+    });
+
+    it("should queue the proposal", async () => {
+      let hash = "0x9b384e2727bcd2b4a6a8c98e63706d7c8f78ab60cffc95c9258b363b339ef509";
+      await governanceContract.connect(owner).queue([treasuryContract.address], [0], [encodedFunction], hash)
+
+      let proposalState;
+      proposalState = await governanceContract.state(proposalId);
+      console.log("Proposal State", proposalState, "(Queue)");
+
+      expect(String(await governanceContract.state(proposalId))).to.equal(String(5))
+    })
+
+    it("should execute the proposal", async () => {
+      let hash = "0x9b384e2727bcd2b4a6a8c98e63706d7c8f78ab60cffc95c9258b363b339ef509";
+      await governanceContract.connect(owner).execute([treasuryContract.address], [0], [encodedFunction], hash)
+
+      let proposalState;
+      proposalState = await governanceContract.state(proposalId);
+      console.log("Proposal State", proposalState, "(Executed)");
+
+      expect(String(await governanceContract.state(proposalId))).to.equal(String(7))
     })
   });
 
-  describe("Treasury Contract Interaction", () => {});
+  describe("Treasury Contract Interaction", () => {
+    it("should release funds", async () => {
+      expect(String(await treasuryContract.isReleased())).to.equal(String(true))
+    })
+
+    it("treasury balance should be 0", async () => {
+      let funds = await provider.getBalance(treasuryContract.address);
+      let parseFunds = ethers.utils.formatEther(String(funds));
+      expect(parseFunds).to.equal("0.0");
+    })
+  });
 });
