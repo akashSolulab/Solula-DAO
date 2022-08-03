@@ -5,27 +5,26 @@ const About = () => {
     <div>
       <>
         <div className="mx-auto mt-5 max-w-xl text-xl text-gray-50">
-          <h1>About</h1>
+          <h1> <b> About </b> </h1>
         </div>
         <div
           className="mx-auto mt-2 block p-6 m-2 max-w-xl rounded-lg border shadow-md "
           style={{ borderColor: "#2d2d2d" }}
         >
           <h1 className=" text-gray-50 text-lg font-semibold">Network</h1>
-          <p className="font-normal text-gray-400">Ethereum mainnet</p>
+          <p className="font-normal text-gray-400">Goerli testnet</p>
 
           <h1 className=" text-gray-50 text-lg font-semibold mt-4">
             Proposal Validation
           </h1>
-          <p className="font-normal text-gray-400 ">basic</p>
+          <p className="font-normal text-gray-400 ">1. Queue</p>
+          <p className="font-normal text-gray-400 ">2. Execute</p>
 
           <h1 className=" text-gray-50 text-lg font-semibold mt-4">
             Voting Strategy
           </h1>
-          <p className="font-normal text-gray-400 ">Multichain</p>
+          <p className="font-normal text-gray-400 ">ERC20</p>
 
-          <h1 className=" text-gray-50 text-lg font-semibold mt-4">Plugins</h1>
-          <p className="font-normal text-gray-400 ">poap</p>
         </div>
         <div>
           <ul
@@ -44,7 +43,7 @@ const About = () => {
             >
               <img
                 src="https://mdbootstrap.com/img/new/standard/city/047.jpg"
-                class=" h-8 w-8 rounded-full"
+                className=" h-8 w-8 rounded-full"
                 alt=""
               />{" "}
               0x35EA...14B7
@@ -68,7 +67,7 @@ const About = () => {
             >
               <img
                 src="https://mdbootstrap.com/img/new/standard/city/041.jpg"
-                class=" h-8 w-8 rounded-full"
+                className=" h-8 w-8 rounded-full"
                 alt=""
               />{" "}
               0x47f8...32a1
@@ -79,7 +78,7 @@ const About = () => {
             >
               <img
                 src="https://mdbootstrap.com/img/new/standard/city/042.jpg"
-                class=" h-8 w-8 rounded-full"
+                className=" h-8 w-8 rounded-full"
                 alt=""
               />{" "}
               abvavgjoe.eth
@@ -90,7 +89,7 @@ const About = () => {
             >
               <img
                 src="https://mdbootstrap.com/img/new/standard/city/043.jpg"
-                class=" h-8 w-8 rounded-full"
+                className=" h-8 w-8 rounded-full"
                 alt=""
               />{" "}
               redvan.eth
@@ -101,7 +100,7 @@ const About = () => {
             >
               <img
                 src="https://mdbootstrap.com/img/new/standard/city/044.jpg"
-                class=" h-8 w-8 rounded-full"
+                className=" h-8 w-8 rounded-full"
                 alt=""
               />{" "}
               grendel.eth
@@ -112,7 +111,7 @@ const About = () => {
             >
               <img
                 src="https://mdbootstrap.com/img/new/standard/city/045.jpg"
-                class=" h-8 w-8 rounded-full"
+                className=" h-8 w-8 rounded-full"
                 alt=""
               />{" "}
               frogmonkee.eth
@@ -123,7 +122,7 @@ const About = () => {
             >
               <img
                 src="https://mdbootstrap.com/img/new/standard/city/046.jpg"
-                class=" h-8 w-8 rounded-full"
+                className=" h-8 w-8 rounded-full"
                 alt=""
               />{" "}
               icedcool.eth

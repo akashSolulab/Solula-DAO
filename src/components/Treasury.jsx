@@ -9,19 +9,19 @@ import {
 } from "../utils/governace/governance-interaction";
 
 const Treasury = () => {
-  const [funds, setFunds] = useState();
-  const [name, setName] = useState();
-  const [symbol, setSymbol] = useState();
-  const [released, setReleased] = useState();
-  const [address, setAddress] = useState();
+  const [funds, setFunds] = useState("Fetching data");
+  const [name, setName] = useState("Fetching data");
+  const [symbol, setSymbol] = useState("Fetching data");
+  const [released, setReleased] = useState("Fetching data");
+  const [address, setAddress] = useState("Fetching data");
 
   useEffect(() => {
     let fetch = async () => {
-      setFunds(await fundsInsideTreasury());
       setName(await checkTreasuryName());
       setSymbol(await checkTreasurySymbol());
-      setReleased(await checkFundReleaseFromTreasury());
       setAddress(await checkTreasuryAddress());
+      setFunds(await fundsInsideTreasury());
+      setReleased(await checkFundReleaseFromTreasury());
     };
     fetch();
   });

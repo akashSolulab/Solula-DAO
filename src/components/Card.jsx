@@ -95,21 +95,14 @@ const Card = (props) => {
     });
 
     setTimeLeft(fetchTimeLeft());
-  }, [
-    proposalState,
-    proposalStateString,
-    timeLeft,
-    votesFor,
-    votesAgainst,
-    votesAbstain,
-  ]);
+  }, [getProposalState, timeLeft, votesFor, votesAgainst, votesAbstain]);
 
   useEffect(() => {
     provider.send("eth_requestAccounts", []).then(async () => {
       let signerObj = provider.getSigner();
       setSigner(await signerObj.getAddress());
     });
-  });
+  }, []);
 
   console.log(timeLeft);
 
@@ -124,58 +117,100 @@ const Card = (props) => {
         <div className="modal justify-start ">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
-            <h2>
-              <b> {data.description} </b>
-            </h2>
+            <h1>
+              <b className="text-2xl"> {data.description} </b>
+            </h1>
             <p>
-              Static Data Below. This can be replaced with a useful data <br />
-              DAOs are an effective and safe way to work with like-minded folks
-              around the globe.
+              {" "}
+              <small>
+                <b>
+                  {" "}
+                  Static Data Below. This can be replaced with a useful data{" "}
+                  <br />
+                  DAOs are an effective and safe way to work with like-minded
+                  folks around the globe.
+                </b>
+              </small>
             </p>
             <br />
             <hr />
-            <p> Quorum: {quorumState} </p>
-            <hr />
             <p>
               {" "}
-              Voting Stats: Votes For = {votesFor} || Votes Against ={" "}
-              {votesAgainst} || Votes Abstain = {votesAbstain}{" "}
+              <b>Quorum: </b>
+              <button
+                type="button"
+                class="py-2 px-2 text-xs font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                {" "}
+                {quorumState}
+              </button>
             </p>
             <hr />
+
+            <ul className="px-8 w-48 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+              <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600 text-center">
+                <b>Voting Stats</b>
+              </li>
+              <li className="py-2 px-4 w-full rounded-t-lg border-b border-gray-200 dark:border-gray-600">
+                For: {votesFor}{" "}
+              </li>
+              <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
+                Against: {votesAgainst}{" "}
+              </li>
+              <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600">
+                Abstain: {votesAbstain}{" "}
+              </li>
+            </ul>
+
+            <hr />
             <p>
-              Place your vote here:
+              <b className="text-base"> Place your vote here: </b>
               <button
-                className="rounded-full"
+                type="button"
+                className="h-8 px-4 m-2	 focus:outline-none text-black bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
                 onClick={async () => {
                   await delegateGovernanceToken();
                   await castVoteAndParticipate(data.pId, 1);
                 }}
               >
-                For
-              </button>{" "}
-              ||
+                <small>
+                  {" "}
+                  <b>For</b>{" "}
+                </small>
+              </button>
+              {/**
+               * Against
+               */}
               <button
-                className="rounded-full"
+                type="button"
+                className="h-8 px-4 m-2  focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:focus:ring-yellow-900"
                 onClick={async () => {
                   await delegateGovernanceToken();
-                  await castVoteAndParticipate(data.pId, 1);
+                  await castVoteAndParticipate(data.pId, 0);
                 }}
               >
-                Against
-              </button>{" "}
-              ||
+                <small>
+                  {" "}
+                  <b>Against</b>{" "}
+                </small>
+              </button>
+
               <button
-                className="rounded-full"
+                type="button"
+                className="h-8 px-4 m-2 focus:outline-none text-black bg-yellow-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
                 onClick={async () => {
                   await delegateGovernanceToken();
-                  await castVoteAndParticipate(data.pId, 1);
+                  await castVoteAndParticipate(data.pId, 2);
                 }}
               >
-                Abstain
-              </button>{" "}
+                <small>
+                  {" "}
+                  <b>Abstain</b>{" "}
+                </small>
+              </button>
             </p>
             <button className="close-modal" onClick={toggleModal}>
-              <b>X</b>
+              <b className="text-2xl">X</b>
             </button>
           </div>
         </div>
@@ -193,9 +228,6 @@ const Card = (props) => {
               alt=""
             />
             <p className=" font-medium text-gray-400 ml-2">Solulab DAO</p>
-            <button className=" hover:bg-blue-700 text-gray-400 font-bold  px-1 rounded-full">
-              Core
-            </button>
           </div>
 
           <button className="bg-green-500 hover:bg-blue-700 text-white font-bold  px-3 rounded-full">
