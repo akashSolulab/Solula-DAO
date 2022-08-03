@@ -54,12 +54,12 @@ const getSigner = async () => {
 };
 
 // delegate token
-export const delegateGovernanceToken = async (walletAddress) => {
+export const delegateGovernanceToken = async () => {
   try {
     await getSigner();
     console.log(signer);
     console.log("provider", provider);
-    await tokenContractInstance.connect(signerObj).delegate(walletAddress);
+    await tokenContractInstance.connect(signerObj).delegate(signer);
   } catch (err) {
     console.log(err);
   }
@@ -76,6 +76,21 @@ export const fundsInsideTreasury = async () => {
 // check is funds released from treasury
 export const checkFundReleaseFromTreasury = async () => {
   return await treasuryContractInstance.connect(provider).isReleased();
+};
+
+// treausy address
+export const checkTreasuryAddress = async () => {
+  return tokenContract;
+};
+
+// treasury name
+export const checkTreasuryName = async () => {
+  return await tokenContractInstance.connect(provider).name();
+};
+
+// treasury symbol
+export const checkTreasurySymbol = async () => {
+  return await tokenContractInstance.connect(provider).symbol();
 };
 
 // create proposal
@@ -133,8 +148,9 @@ export const getVoteStatics = async (id) => {
 };
 
 // create queue for the proposal
-export const queueGovernance = async (data) => {
-  let hash = ethers.utils.hashMessage(data.description);
+export const queueGovernance = async () => {
+  let hash =
+    "0x9b384e2727bcd2b4a6a8c98e63706d7c8f78ab60cffc95c9258b363b339ef509";
   await getSigner();
   await governanceContractInstance
     .connect(signerObj)
@@ -142,8 +158,9 @@ export const queueGovernance = async (data) => {
 };
 
 // create execute the proposal
-export const executeGovernance = async (data) => {
-  let hash = ethers.utils.hashMessage(data.description);
+export const executeGovernance = async () => {
+  let hash =
+    "0x9b384e2727bcd2b4a6a8c98e63706d7c8f78ab60cffc95c9258b363b339ef509";
   await getSigner();
   await governanceContractInstance
     .connect(signerObj)

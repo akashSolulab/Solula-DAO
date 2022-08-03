@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { TreasuryContext } from "../context/treasury.context";
-import { createProposal } from "../utils/governace/governance-interaction";
+import { createProposal, queueGovernance, executeGovernance } from "../utils/governace/governance-interaction";
 
 export const Create = () => {
   const [treasuryAddress, setTreasuryAddress] = useState("");
@@ -40,7 +40,7 @@ export const Create = () => {
       <br />
       <div>
         <button
-          className="bg-red-500 hover:bg-blue-700 text-white font-bold  px-3 rounded-full py-2"
+          className="bg-red-500 hover:bg-blue-700 text-black font-bold  px-3 rounded-full py-2"
           onClick={async () => {
             await createProposal(treasuryAddress, description);
             updateTreasuryArray(treasuryAddress);
@@ -48,6 +48,30 @@ export const Create = () => {
           }}
         >
           Create Proposal
+        </button>
+      </div>
+      <div>
+        <button
+          className="bg-yellow-500 hover:bg-blue-700 text-black font-bold  px-3 rounded-full py-2"
+          onClick={async () => {
+            await queueGovernance(treasuryAddress, description);
+            updateTreasuryArray(treasuryAddress);
+            console.log(treasuryArray);
+          }}
+        >
+          Queue Proposal
+        </button>
+      </div>
+      <div>
+        <button
+          className="bg-green-500 hover:bg-blue-700 text-black font-bold  px-3 rounded-full py-2"
+          onClick={async () => {
+            await executeGovernance(treasuryAddress, description);
+            updateTreasuryArray(treasuryAddress);
+            console.log(treasuryArray);
+          }}
+        >
+          Execute Proposal
         </button>
       </div>
     </div>

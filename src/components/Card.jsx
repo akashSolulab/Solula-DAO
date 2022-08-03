@@ -13,12 +13,12 @@ import moment from "moment";
 const Card = (props) => {
   const { data, index } = props;
   const [modal, setModal] = useState(false);
-  const [proposalState, setProposalState] = useState(0);
+  const [proposalState, setProposalState] = useState();
   const [proposalStateString, setproposalStateString] = useState("");
-  const [quorumState, setQuorumState] = useState(0);
-  const [votesFor, setVotesFor] = useState(0);
-  const [votesAgainst, setVotesAgainst] = useState(0);
-  const [votesAbstain, setVotesAbstain] = useState(0);
+  const [quorumState, setQuorumState] = useState();
+  const [votesFor, setVotesFor] = useState();
+  const [votesAgainst, setVotesAgainst] = useState();
+  const [votesAbstain, setVotesAbstain] = useState();
   const [signer, setSigner] = useState();
   const [timeLeft, setTimeLeft] = useState();
 
@@ -147,9 +147,7 @@ const Card = (props) => {
               <button
                 className="rounded-full"
                 onClick={async () => {
-                  await delegateGovernanceToken(
-                    process.env.REACT_APP_ADMIN_ADDRESS
-                  );
+                  await delegateGovernanceToken();
                   await castVoteAndParticipate(data.pId, 1);
                 }}
               >
@@ -159,10 +157,8 @@ const Card = (props) => {
               <button
                 className="rounded-full"
                 onClick={async () => {
-                  await delegateGovernanceToken(
-                    process.env.REACT_APP_ADMIN_ADDRESS
-                  );
-                  await castVoteAndParticipate(data.pId, 0);
+                  await delegateGovernanceToken();
+                  await castVoteAndParticipate(data.pId, 1);
                 }}
               >
                 Against
@@ -171,10 +167,8 @@ const Card = (props) => {
               <button
                 className="rounded-full"
                 onClick={async () => {
-                  await delegateGovernanceToken(
-                    process.env.REACT_APP_ADMIN_ADDRESS
-                  );
-                  await castVoteAndParticipate(data.pId, 2);
+                  await delegateGovernanceToken();
+                  await castVoteAndParticipate(data.pId, 1);
                 }}
               >
                 Abstain

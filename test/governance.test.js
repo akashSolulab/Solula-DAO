@@ -318,6 +318,7 @@ describe("Testing Governance Flow", async () => {
       proposalState = await governanceContract.state(proposalId);
       console.log("Proposal State:", proposalState, "(Pending)");
 
+      // 0 - Against, 1 - For, 2 - Abstain
       await governanceContract.connect(address1).castVote(proposalId, 1);
       await governanceContract.connect(address2).castVote(proposalId, 1);
       await governanceContract.connect(address3).castVote(proposalId, 1);
@@ -325,7 +326,7 @@ describe("Testing Governance Flow", async () => {
       await governanceContract.connect(address5).castVote(proposalId, 1);
 
       proposalState = await governanceContract.state(proposalId);
-      console.log("Proposal statw:", proposalState, "(Active)");
+      console.log("Proposal state:", proposalState, "(Active)");
 
       // adding one block to the chain
       await tokenContract.transfer(address1.address, amount, {
@@ -344,41 +345,55 @@ describe("Testing Governance Flow", async () => {
       proposalState = await governanceContract.state(proposalId);
       console.log("Proposal State", proposalState, "(Success)");
 
-      expect(String(await governanceContract.state(proposalId))).to.equal(String(4));
+      expect(String(await governanceContract.state(proposalId))).to.equal(
+        String(4)
+      );
     });
 
     it("should queue the proposal", async () => {
-      let hash = "0x9b384e2727bcd2b4a6a8c98e63706d7c8f78ab60cffc95c9258b363b339ef509";
-      await governanceContract.connect(owner).queue([treasuryContract.address], [0], [encodedFunction], hash)
+      let hash =
+        "0x9b384e2727bcd2b4a6a8c98e63706d7c8f78ab60cffc95c9258b363b339ef509";
+      await governanceContract
+        .connect(owner)
+        .queue([treasuryContract.address], [0], [encodedFunction], hash);
 
       let proposalState;
       proposalState = await governanceContract.state(proposalId);
       console.log("Proposal State", proposalState, "(Queue)");
 
-      expect(String(await governanceContract.state(proposalId))).to.equal(String(5))
-    })
+      expect(String(await governanceContract.state(proposalId))).to.equal(
+        String(5)
+      );
+    });
 
     it("should execute the proposal", async () => {
-      let hash = "0x9b384e2727bcd2b4a6a8c98e63706d7c8f78ab60cffc95c9258b363b339ef509";
-      await governanceContract.connect(owner).execute([treasuryContract.address], [0], [encodedFunction], hash)
+      let hash =
+        "0x9b384e2727bcd2b4a6a8c98e63706d7c8f78ab60cffc95c9258b363b339ef509";
+      await governanceContract
+        .connect(owner)
+        .execute([treasuryContract.address], [0], [encodedFunction], hash);
 
       let proposalState;
       proposalState = await governanceContract.state(proposalId);
       console.log("Proposal State", proposalState, "(Executed)");
 
-      expect(String(await governanceContract.state(proposalId))).to.equal(String(7))
-    })
+      expect(String(await governanceContract.state(proposalId))).to.equal(
+        String(7)
+      );
+    });
   });
 
   describe("Treasury Contract Interaction", () => {
     it("should release funds", async () => {
-      expect(String(await treasuryContract.isReleased())).to.equal(String(true))
-    })
+      expect(String(await treasuryContract.isReleased())).to.equal(
+        String(true)
+      );
+    });
 
     it("treasury balance should be 0", async () => {
       let funds = await provider.getBalance(treasuryContract.address);
       let parseFunds = ethers.utils.formatEther(String(funds));
       expect(parseFunds).to.equal("0.0");
-    })
+    });
   });
 });
