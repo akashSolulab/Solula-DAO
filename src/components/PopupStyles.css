@@ -29,7 +29,8 @@ body.active-modal {
   left: 50%;
   transform: translate(-50%, -50%);
   line-height: 1.4;
-  background: #f1f1f1;
+  background: #2b2929;
+  color: antiquewhite;
   padding: 14px 28px;
   border-radius: 3px;
   max-width: 600px;
@@ -41,4 +42,10 @@ body.active-modal {
   top: 10px;
   right: 10px;
   padding: 5px 7px;
+}
+
+.vote-status-box {
+  padding-left: 150px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

@@ -168,6 +168,7 @@ export const executeGovernance = async () => {
 };
 
 export const fetchProposalLength = async () => {
+  
   return String(
     await governanceContractInstance.connect(provider).proposalIterator()
   );
@@ -176,12 +177,18 @@ export const fetchProposalLength = async () => {
 let startResult = 0;
 let proposalData = [];
 export const fetchProposalData = async () => {
+  const dataLength = await fetchProposalLength();
+  if(dataLength === proposalData.length) {
+    return;
+  } 
   fetchProposalLength().then(async (result) => {
+    
     if (result > startResult) {
       for (let i = 1; i <= result; i++) {
         let data = await governanceContractInstance
           .connect(provider)
           .proposals(i);
+          console.log(data);
         let parseData = {
           id: String(data[0]),
           description: data[1],
