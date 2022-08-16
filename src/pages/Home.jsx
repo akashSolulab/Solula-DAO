@@ -9,23 +9,26 @@ import CardList from "../components/CardList.jsx";
 
 const Home = () => {
   const [proposalDataArray, setProposalDataArray] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isRendering, setRendering] = useState(false);
 
   let getData = () => {
-    fetchProposalData().then((result) => {
+    setLoading(true)
+    fetchProposalData()
+    .then((result) => {
       setProposalDataArray(result);
+      setLoading(false);
     });
-    setLoading(false);
   };
 
-  useEffect(() => {
-    setRendering(true)
-  })
+  // useEffect(() => {
+  //   setRendering(true)
+  // })
 
   useEffect( () => {
-    isRendering && getData();
-  }, [isRendering]);
+    // isRendering && getData();
+    getData();
+  }, []);
 
   console.log(proposalDataArray);
 
@@ -40,7 +43,7 @@ const Home = () => {
           <Heading />
           {
             
-            loading && proposalDataArray ? null : <CardList proposalDataArray={proposalDataArray} />
+            loading ? null : <CardList proposalDataArray={proposalDataArray} />
           }
         </div>
       </div>

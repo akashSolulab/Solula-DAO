@@ -26,7 +26,7 @@ async function main() {
 
   // transfer some initial tokens to participants
   // this can be managed using a exchange to provide utility token
-  const amountToTransferInParticipantWallet = ethers.utils.parseEther("100");
+  const amountToTransferInParticipantWallet = ethers.utils.parseEther("1500");
   const transfer_1 = await token.transfer(
     participant_1,
     amountToTransferInParticipantWallet
@@ -69,7 +69,7 @@ async function main() {
   // deploy governance contract
   const quorum = 5; // Percentage of total supply of tokens needed to aprove proposals (5%)
   const votingDelay = 1; // How many blocks after proposal until voting becomes active
-  const votingPeriod = 15; // How many blocks to allow voters to vote
+  const votingPeriod = 25; // How many blocks to allow voters to vote
 
   const Governance = await ethers.getContractFactory("Governance");
   const governance = await Governance.deploy(
@@ -103,8 +103,16 @@ async function main() {
   const proposerRole = await timelock.PROPOSER_ROLE();
   const executorRole = await timelock.EXECUTOR_ROLE();
 
-  await timelock.grantRole(proposerRole, governance.address);
-  await timelock.grantRole(executorRole, governance.address);
+  console.log(`
+    proposer role: ${proposerRole}
+    executor role: ${executorRole}
+  `);
+
+  let grantProposerRole = await timelock.grantRole(proposerRole, governance.address);
+  console.log("grant proposer role", grantProposerRole);
+
+  let grantExecutorRole = await timelock.grantRole(executorRole, governance.address);
+  console.log("grant executor role", grantExecutorRole);
 
 }
 

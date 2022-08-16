@@ -84,18 +84,25 @@ const Card = (props) => {
       setproposalStateString(proposalStateOutput());
     });
 
+  }, [proposalStateOutput]);
+
+  useEffect(() => {
+    setTimeLeft(fetchTimeLeft());
+  })
+
+  useEffect(() => {
     getQuorum().then((result) => {
       setQuorumState(result);
     });
+  }) 
 
+  useEffect(() => {
     getVoteStatics(data.pId).then((result) => {
       setVotesFor(result.voteFor);
       setVotesAgainst(result.voteAgainst);
       setVotesAbstain(result.voteAbstain);
     });
-
-    setTimeLeft(fetchTimeLeft());
-  }, [getProposalState, timeLeft, votesFor, votesAgainst, votesAbstain]);
+  })
 
   useEffect(() => {
     provider.send("eth_requestAccounts", []).then(async () => {
@@ -110,12 +117,12 @@ const Card = (props) => {
     <div
       key={index}
       onClick={() => {
-        toggleModal();
+        toggleModal()
       }}
     >
       {modal && (
         <div className="modal justify-start ">
-          <div onClick={toggleModal} className="overlay"></div>
+          <div className="overlay"></div>
           <div className="modal-content">
             <h1>
               <b className="text-2xl"> {data.description} </b>
@@ -133,7 +140,7 @@ const Card = (props) => {
               </small>
             </p>
             <br />
-            <hr />
+            
             <p>
               {" "}
               <b>Quorum: </b>
@@ -145,7 +152,7 @@ const Card = (props) => {
                 {quorumState}
               </button>
             </p>
-            <hr />
+            
             <div className="vote-status-box ">
             <ul className="px-8 w-48 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
               <li className="py-2 px-4 w-full border-b border-gray-200 dark:border-gray-600 text-center">

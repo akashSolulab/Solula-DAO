@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+
 import Token from "../../contracts/Token.json";
 import Governance from "../../contracts/Governance.json";
 import TimeLock from "../../contracts/TimeLock.json";
@@ -149,8 +150,9 @@ export const getVoteStatics = async (id) => {
 
 // create queue for the proposal
 export const queueGovernance = async () => {
+  
   let hash =
-    "0x9b384e2727bcd2b4a6a8c98e63706d7c8f78ab60cffc95c9258b363b339ef509";
+    "0x532e94ca463b7e38f99f1fd6f60e55019bf233c42eba46afd83589b64d2b5a78";
   await getSigner();
   await governanceContractInstance
     .connect(signerObj)
@@ -160,7 +162,7 @@ export const queueGovernance = async () => {
 // create execute the proposal
 export const executeGovernance = async () => {
   let hash =
-    "0x9b384e2727bcd2b4a6a8c98e63706d7c8f78ab60cffc95c9258b363b339ef509";
+    "0x532e94ca463b7e38f99f1fd6f60e55019bf233c42eba46afd83589b64d2b5a78";
   await getSigner();
   await governanceContractInstance
     .connect(signerObj)

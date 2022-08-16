@@ -7,6 +7,8 @@ contract Treasury is Ownable {
     uint256 public totalFunds;
     address public payee;
     bool public isReleased;
+    bool public veto;
+    string data;
 
     /**@notice contract constructor
         @param _payee who receives the funds
@@ -21,7 +23,17 @@ contract Treasury is Ownable {
         @dev release the funds inside the treasury
      */
     function releaseFunds() public onlyOwner {
-        isReleased = true;
         payable(payee).transfer(totalFunds);
+        isReleased = true;
+    }
+
+    // A demo setter function
+    function setData(string memory _data) public {
+        data = _data;
+    }
+
+    // A demo veto proposal function
+    function setVeto() public {
+        veto = true;
     }
 }
