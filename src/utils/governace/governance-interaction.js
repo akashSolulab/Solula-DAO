@@ -152,7 +152,7 @@ export const getVoteStatics = async (id) => {
 export const queueGovernance = async () => {
   
   let hash =
-    "0x532e94ca463b7e38f99f1fd6f60e55019bf233c42eba46afd83589b64d2b5a78";
+    "0xc7d305603a21f5c8583039820cc493f6f7f82ba1ff58b47f8138d2b8a441444c";
   await getSigner();
   await governanceContractInstance
     .connect(signerObj)
@@ -162,7 +162,7 @@ export const queueGovernance = async () => {
 // create execute the proposal
 export const executeGovernance = async () => {
   let hash =
-    "0x532e94ca463b7e38f99f1fd6f60e55019bf233c42eba46afd83589b64d2b5a78";
+    "0xc7d305603a21f5c8583039820cc493f6f7f82ba1ff58b47f8138d2b8a441444c";
   await getSigner();
   await governanceContractInstance
     .connect(signerObj)

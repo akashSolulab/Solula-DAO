@@ -109,9 +109,11 @@ async function main() {
   `);
 
   let grantProposerRole = await timelock.grantRole(proposerRole, governance.address);
+  grantProposerRole.wait();
   console.log("grant proposer role", grantProposerRole);
 
   let grantExecutorRole = await timelock.grantRole(executorRole, governance.address);
+  grantExecutorRole.wait();
   console.log("grant executor role", grantExecutorRole);
 
 }
